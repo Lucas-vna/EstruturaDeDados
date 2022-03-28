@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <stdbool.h>
+#include <string.h>
+#define TAMANHO 
+
+//-------------------------------------------------------------|
+typedef struct NoLista* PtrNoLista;
+
+//--------------No de Lista------------------------------------|
+typedef struct NoLista{
+    int elemento;
+    PtrNoLista proximo;
+}NoLista;
+
+//--------------Lista------------------------------------------|
+typedef struct{
+    PtrNoLista inicio;
+    int qtde;
+}ListaOrdenada;
+
+//--------------Inicia Lista-----------------------------------|
+void IniciaListaOrdenada(ListaOrdenada *l){
+    l->inicio = NULL;
+    l->qtde = 0;
+}
+
+//--------------Esta vazia-------------------------------------|
+bool EstaVaziaListaOrdenada(ListaOrdenada *l){
+    return(l->inicio == NULL);
+}
+
+//--------------Esta Cheia-------------------------------------|
+
+
+//--------------Tamanho----------------------------------------|
+bool TamanhoListaOrdenada(ListaOrdenada *l){
+
+}
+
+//--------------Maximo(ultimo)---------------------------------|
+
+
+//--------------Minimo(primeiro)-------------------------------|
+
+
+//--------------Proximo----------------------------------------|
+
+
+//--------------Anterior---------------------------------------|
+
+
+//--------------Destuir Lista----------------------------------|
+
+
+//--------------Inserir elemento-------------------------------|
+void InsereElemento(ListaOrdenada *l, int x){
+    //criar ponteiro para um NOVO no
+    PtrNoLista novo;
+    
+    //alocar memorio do NOVO no
+    novo = malloc(sizeof(NoLista));
+   
+    //copiar o valor X para o NOVO no
+    novo->elemento = x;
+   
+    //situacoes
+        //A: 1a insercao
+        //B: elemento < primeiro elemento da lista
+        //C: elemento
+    //se situacao = A/B
+    if (EstaVaziaListaOrdenada(1) || novo->elemento < l->inicio){
+        //proximo do NOVO aponto para o inicio da lista
+        novo->proximo = l->inicio;
+
+        //inicio aponta para NOVO no
+        l->inicio = novo;
+    }else{
+        //se nao = C
+        //percorrer lista e encontrar posicao de insercao
+        PtrNoLista aux = l->inicio;
+        
+        //while para qnd proximo do aux == NULL ou prox do aux (valor >elemento)
+        while (aux->proximo != NULL && aux->proximo->elemento <= x){
+            aux = aux->proximo;
+        }//while
+
+        //AUX: uma posicao antes do NOVO elemento
+        //1. proximo do NOVO aponta para o proximo aux
+        novo->proximo = aux->proximo;
+        
+        //2. ux aponta para o NOVO no
+        aux->proximo = novo;
+    }//else
+
+    //qtde++
+    l->qtde++;
+}//void
+
+//--------------Remover elemento-------------------------------|
+void RemoveElemento(ListaOrdenada *l){
+
+}
+
+//--------------Pesquisar elemento-----------------------------|
+
+
+//--------------Pesquisar elemento-----------------------------|
+void ImprimiLista(ListaOrdenada *l){
+    printf("Lista = [");
+    PtrNoLista temp;
+    for (temp = l->inicio; temp!= NULL; temp = temp->proximo){
+        /* code */
+    }
+    printf(" ]\n")
+}
+
+//--------------MAIN-------------------------------------------|
+int main(int argc, char const *argv[]){
+
+    ListaOrdenada lista;
+
+        IniciaListaOrdenada(&lista);
+        
+        if (EstaVaziaListaOrdenada(&lista)){
+            /* code */
+        }
+        
+        printf("Tamanho = %d\n", TamanhoListaOrdenada(&lista));
+
+return 0;
+}
