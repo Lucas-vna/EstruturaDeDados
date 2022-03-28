@@ -143,9 +143,10 @@ int main(int argc,char const *argv[]) {
   //pegando os numeros do arquivo
     fscanf(entrada, "%d", &valor);
     //verificando o final do arquivo
-    if(feof(entrada)){
+    /*if(feof(entrada)){
       break;
-    }//if
+    }*/
+
     //condiçao para empilhar o numero
     if(valor >= 0){
       AdicionaPilha(&SegundaPilhaEstatica, valor);
@@ -160,6 +161,10 @@ int main(int argc,char const *argv[]) {
       printf("Erro: O valor do numero do arquivo nao e inteiro positivo!\n");
       return 0;
     }//else
+    if(feof(entrada)){
+      break;
+    }//if
+
   }//while
 
   //passando os valores da pilha estatica para a conversão
