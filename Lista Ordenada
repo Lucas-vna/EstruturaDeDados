@@ -36,14 +36,16 @@ bool EstaVaziaListaOrdenada(ListaOrdenada *l){
 
 //--------------Tamanho----------------------------------------|
 bool TamanhoListaOrdenada(ListaOrdenada *l){
-
+    return(l->qtde);
 }
 
 //--------------Maximo(ultimo)---------------------------------|
 
 
 //--------------Minimo(primeiro)-------------------------------|
+int PrimeiroElementoListOrdenada(ListaOrdenada *l){
 
+}
 
 //--------------Proximo----------------------------------------|
 
@@ -52,7 +54,20 @@ bool TamanhoListaOrdenada(ListaOrdenada *l){
 
 
 //--------------Destuir Lista----------------------------------|
+void DestroiListOrdenada(ListaOrdenada *l){
+    PtrNoLista aux;
+    while (TamanhoLista(l) != 0){
+        aux = l->inicio;
+        printf("Removendo: %d \n", aux->elemento);
 
+        l->inicio = l->inicio->proximo;
+        
+        free(aux);
+
+        l->qtde--;
+    }
+    
+}
 
 //--------------Inserir elemento-------------------------------|
 void InsereElemento(ListaOrdenada *l, int x){
@@ -99,21 +114,93 @@ void InsereElemento(ListaOrdenada *l, int x){
 }//void
 
 //--------------Remover elemento-------------------------------|
-void RemoveElemento(ListaOrdenada *l){
+bool RemoveElemento(ListaOrdenada *l, int valor){
+    PtrNoLista aux;
+    
+    //A - lista vazia
+    //B - Valor < que o primeiro elemento da lista
+    if (EstaVaziaListaOrdenada(l) || valor < l->inicio->elemento){
+        return false;
+    }
 
+    //C - valor = primeiro elemento da lista
+    if (valor == l->inicio->elemento){
+        //cria um aux
+        aux = l->inicio;
+       
+        //inicio recebe proximo do inicio
+        l->inicio = l->inicio->proximo;
+
+        //libera memoria do aux
+        free(aux);
+
+        //qtde decrementada
+        l->qtde--;
+
+        //retorna verdade
+        return(true);
+    }
+
+    //D - percorrer a lista
+    aux = l->inicio;
+    while (aux->proximo != NULL && aux->proximo->elemento < valor){
+        aux = aux->proximo;
+    }
+    
+    //proximo aux (contem na teoria) a posicao onde valo deveria existir
+    //aux-<proximo == NULL (falso)
+    //aux->proximo->elemento != valor (falso)
+    //D1 - não achou o numero
+    if (aux->proximo == NULL || aux->proximo->elemento != valor){
+        return false;
+    }
+
+    //aux->proximo->elemento == valor
+    //D2 achou o numero
+        //criar outra variavel de ptr
+        PtrNoLista remove;
+        
+        //ptr apontar para o proximo do aux
+        remove = aux->proximo;
+        
+        //proxiom do aux recebe o proximo do proximo do aux
+        aux->proximo = aux->proximo->proximo;
+        
+        //desloca memoria do ptr
+        free(remove);
+        
+        //qtde--
+        l->qtde--;
+
+        //retorna verdadeiro
+        return true;
 }
 
 //--------------Pesquisar elemento-----------------------------|
+bool PesquisaElemento(ListaOrdenada *l, int valor, int *contador){
+    //percorrer a lista e encontrar ou não o elemento
+    PtrNoLista aux;
 
+    for (aux = l->inicio; aux != NULL; aux = aux->proximo){
+        if (aux->elemento == valor){
+            return true;
+        }
+        
+        if (aux->elemento > valor){
+            return false;
+        }   
+    }
+    return false;
+}
 
-//--------------Pesquisar elemento-----------------------------|
+//--------------Imprime Lista----------------------------------|
 void ImprimiLista(ListaOrdenada *l){
     printf("Lista = [");
     PtrNoLista temp;
     for (temp = l->inicio; temp!= NULL; temp = temp->proximo){
-        /* code */
+        printf("%d", temp->elemento);
     }
-    printf(" ]\n")
+    printf(" ]\n");
 }
 
 //--------------MAIN-------------------------------------------|
@@ -124,10 +211,25 @@ int main(int argc, char const *argv[]){
         IniciaListaOrdenada(&lista);
         
         if (EstaVaziaListaOrdenada(&lista)){
-            /* code */
+            printf("Salve, ta vazia sim!");
         }
         
         printf("Tamanho = %d\n", TamanhoListaOrdenada(&lista));
 
+        int cont1 = 0;
+        int busca[] = {};
+
+        for (int i = 0; i < 5; i++){
+            cont1 = 0;
+            if(PesquisaElemento(&lista, 0, &cont1)){
+                printf("Valor foi encontrado");
+            }else{
+                printf("Valor nao foi encontrado");
+            }
+        }
+        
+
+        
+printf("\n\n\\n\n\n\n\n\n");
 return 0;
 }
