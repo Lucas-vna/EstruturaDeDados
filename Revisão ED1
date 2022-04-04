@@ -1,0 +1,29 @@
+->Pilha
+
+- Usa-se quando quer a ordem inversa dos dados 
+- primeiro que entra é o último que sai (FiLo)
+- Inserção na pilha é constante = o(1) 		*Apenas uma operação*
+- Remoção na pilha = o(1) 			*Apenas uma operação*
+- Dinâmica (ponteiros) e Esática(vetor)
+- Aplicações: histórico do navegador; ctrl+z; chamadas recursivas 
+
+->Fila
+
+- Usa-se quando quer se mantar a ordem dos dados
+- Primeiro que entra é oprimeiro que sai (FiFo)
+- Inserção na Fila é constante = o(1) 		*Apenas uma operação* 
+- Remoção na fila = o(1) 			*Apenas uma operação*
+- Dinâmica(ponteiros; conjuntos maiores) e Estática(vetor; mais fácil de ser implementada; conjunto pequenos)
+- Aplicações: ordem de tarefas(prioridade do gerenciador de tarefas); fila de impressão; downloads 
+
+->Lista
+
+- Mantém os dados organizados/ordenados
+- "Ordena os elementos"
+- Inserção na lista é linear = o(n) 		*Depende do tamanho da lista*
+- Remoção na lista linear = o(n) 		*Depende do tamanho da lista*
+- Dinâmica(ponteiros; conjuntos maiores) e Estática(vetor; mais fácil de ser implementada; conjunto pequenos)
+- Aplicações: todas as situações que necessitam de organização; preferencia para conjuntos  
+
+->Árvore Binária
+
