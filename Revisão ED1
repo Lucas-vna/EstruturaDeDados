@@ -27,3 +27,8 @@
 
 ->Árvore Binária
 
+- Folhas: não possuem ramificações(filhos) e apontam para NULL
+- Raiz -> NULL
+- Caminho (C) = {A, C , F, H}; -> A = Raiz; C = Direita; F = Esquerda; H = Direita;
+- Altura de um nó X: distãncia do caminho entre X e o seu descendente mais afastado
+- Altura de uma árvore: é a altura da raiz da árvore	
