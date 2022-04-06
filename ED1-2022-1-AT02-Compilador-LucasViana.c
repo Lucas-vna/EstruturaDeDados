@@ -110,9 +110,20 @@ void DestroiPilhaDinamica(PilhaDinamica *pd) {
     }//while
 }
 
-///-----------------Passando eq em C para Assembly------------------
+///-----------------Passando Eq em C para Assembly------------------
 void CtoAssembly(PilhaDinamica *pd, int x){
-    
+    PtrNoPilha PilhaAux;
+
+    IniciaPilhaDinamica(&PilhaAux);
+    int vetor_temp[i];
+
+    for (int i = pd->tamanho; i != NULL; i--){
+        DesempilhaElemento(&PilhaAux);
+
+        EmpilhaElemento();
+
+    }
+        
 }
 
 //-----------------MAIN---------------------------------------------
@@ -130,7 +141,7 @@ int main(int argc, char const *argv[]){
         if(entrada == NULL) {
             printf("O arquivo de ENTRADA nao pode ser aberto!\n");
             system ("pause");
-            exit(1);
+            return(0);
         }else{
             printf("O arquivo foi aberto com sucesso!\n");
         }
@@ -139,7 +150,7 @@ int main(int argc, char const *argv[]){
         if(saida == NULL) {
             printf("O arquivo de SAiDA não pode ser criado !\n");
             system ("pause");
-            exit(1);
+            return(0);
         }else{
             printf("O arquivo foi criado com sucesso!\n");
         }//else
@@ -181,6 +192,3 @@ int main(int argc, char const *argv[]){
     fclose(saida);
     return 0;
 }
-
-
-
