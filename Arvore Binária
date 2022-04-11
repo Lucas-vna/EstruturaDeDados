@@ -179,6 +179,9 @@ bool ProcuraElemento(PtrNoArvore *no, int valor){
 
 }//funcao
 
+//destruit arvore
+//maixmo (interativa/recursiva)
+//minimo (interativa/recursiva)
 
 //-----------------Main--------------------------------------------
 int main(int argc, char const *argv[]){
