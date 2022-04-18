@@ -55,7 +55,7 @@ void imprimeListaDupla(ListaDupla *lista)
 // Insercao Lista Dupla
 // input: lista, valor
 //----------------------------------------------
-void inserirListaDupla(PtrNoLista *lista, int valor)
+void inserirListaDupla(ListaDupla *lista, int valor)
 {
 
     // criar um novo ptr NoLista (Novo)
