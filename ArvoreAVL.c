@@ -34,8 +34,15 @@ aplicaRotacoes(){
         ad = alturaArvoreAVL(&(*direita));
 
     }
-    //void rotacao simples esquerda
-    //void rotacao dupla esquerda
+    //void rotacao simples esquerda (+2)
+    PtrNoAVL u;
+    int aUdir, aUesq;
+    if (fatorBalanceamento == -2)
+    {
+        u = (*no)->esquerda;
+    }
+    
+    //void rotacao dupla esquerda 
     //void rotacao simples diretira
     //void rotacao dupla direita
     //void aplicar rotacao
