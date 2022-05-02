@@ -19,10 +19,48 @@ void iniciaArvoreAVL(PtrNoAVL *no){
     (*no) = NULL;
 }
 
+
+
 //-------------Verifica se esta Vazia------------------------
 estaVaziaAroreAVL(PtrNoAVL *no){
     return((*no) == NULL);
 }
+
+
+
+//-------------Rotacoes Simples Direita na árvore AVL--------------------
+
+void rotacaoSimplesDireita(PtrNoAVL *no){
+
+    PtrNoAVL u = (*no) -> esquerda;
+    (*no)->esquerda = u->direita;
+    u->direita = (*no);
+
+    //atualizar a altura dos nós modificados (node, u)
+    (*no)->altura = atualizaAlturaAVL((*no)->esquerda, (*no)->direita);
+    u->altura = atualizaAlturaAVL(u->esquerda, u->direita);
+
+    //autualizacao da referencia do node
+    (*no) = u;
+
+}//rotacaoSimplesDireita
+
+
+void rotacaoSimplesEsquerda(PtrNoAVL *no){
+
+    PtrNoAVL u = (*no)->direita;
+    (*no)->direita = u->esquerda;
+    u->esquerda = (*no);
+
+    (*no)->altura = atualizaAlturaAVL((*no)->esquerda, (*no)->direita);
+    u->altura = atualizaAlturaAVL(u->esquerda, u->direita);
+
+    (*no) = u;
+
+}//rotacaoSimplesEsquerda
+
+
+
 
 //-------------Aplica Rotacoes-------------------------------
 aplicaRotacoes(){
@@ -49,21 +87,80 @@ aplicaRotacoes(){
 }
 
 
-//------------------------------------------
-void PreOrdem(PtrNoAVL *no){
+
+//-------------ordem da Arvore-------------------
+
+void emOrdem(PtrNoAVL *no){
+
+    if ((*no) == NULL) return;
+    {
+        emOrdem(&(*no) -> esquerda);
+        printf("%d", (*no) -> chave);
+        emOrdem(&(*no) -> direita);
+    }//if
     
-}
+
+}//emOrdem
+
+void preOrdem(PtrNoAVL *no){
+
+    if ((*no) == NULL) return;
+    {
+        printf("%d ", (*no) -> chave);
+        preOrdem(&(*no) -> esquerda);
+        preOrdem(&(*no) -> direita);  
+    }//if
+    
+
+}//preOrdem
 
 void PreOrdemPrincipal(){
     printf("Preo-ordem: ");
     PreOrdem(no);
     printf("\n");
 }
-//-------------Verifica a altura da Arvore-------------------
-alturaArvoreAVL(){
 
-}
+
+
+//-------------Verifica a altura da Arvore-------------------
+
+alturaArvoreAVL(PtrNoAVL *no){
+
+    if (no == NULL)
+    {
+        return(0);
+    }//if
+    else
+    {
+        return((no) -> altura);
+    }//else
+    
+}//alturaArvoreAVL
+
+
+
+//-------------Atualiza a altura da Arvore-------------------
+
+int atualizaAlturaAVL(PtrNoAVL esquerda, PtrNoAVL direita){
+
+    int AlturaEsquerda = alturaArvoreAVL(esquerda);
+    int AlturaDireita = alturaArvoreAVL(direita);
+
+    if (AlturaEsquerda > AlturaDireita)
+    {
+        return (Altura Esquerda + 1);
+    }//if
+    else
+    {
+        return (AlturaDireita + 1);
+    }//else
+
+}//atualizaArvoreAVL
+
+
+
 //-------------Insere Valor na árvore AVL--------------------
+
 bool insereArvoreAVL(PtrNoAVL *no, int valor){
 
     if ((*no) == NUL)
@@ -101,7 +198,6 @@ bool insereArvoreAVL(PtrNoAVL *no, int valor){
     {
         aplicaRotacoes(&(*no));
     }
-    
 
 }
 
@@ -113,8 +209,25 @@ int main(int argc, char const *argv[]){
     
     PtrNoAVL raiz;
 
+        insereArvoreAVL(raiz, 12);
+
+        insereArvoreAVL(raiz, 33);
+
+        insereArvoreAVL(raiz, 32);
+
+        insereArvoreAVL(raiz, 2);
+
+        insereArvoreAVL(raiz, 17);
+
+        insereArvoreAVL(raiz, -1);
+
+        insereArvoreAVL(raiz, -40);
+
+        insereArvoreAVL(raiz, 26);
+
+        insereArvoreAVL(raiz, 38);
+
+        insereArvoreAVL(raiz, 15);
+
     return 0;
 }
-
-
-
