@@ -167,7 +167,7 @@ void imprimeListDupla(ListaDupla *lista)
 void imprimeReverso(ListaDupla *lista)
 {
 
-    if (estaVaziaLista(lista) == true)
+    if (estaVaziaListaDupla(lista) == true)
     {
         printf("Alista esta vazia!");
     } // if
@@ -360,7 +360,7 @@ bool destruirListaDupla(ListaDupla *lista)
     PtrNoLista aux;
     PtrNoLista aux2;
 
-    if (estaVaziaLista(lista) == true)
+    if (estaVaziaListaDupla(lista) == true)
     {
         return false;
     }
