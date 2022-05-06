@@ -9,12 +9,18 @@ typedef struct NoLista *PtrNoLista;
 
 typedef struct NoLista
 {
-    char dados[TOP];
-    int valor;
+    Objeto obj;
     PtrNoLista proximo;
     PtrNoLista anterior;
 
 } NoLista;
+
+typedef struct{
+
+    char dados[TOP];
+    int valor;
+
+}Objeto;
 
 typedef struct NoLista nolista;
 
@@ -82,66 +88,70 @@ void imprimeListaDupla(ListaDupla *lista, FILE *arqsaida)
 
 //----------------------------------------------------------------------
 
-//---------------INSERE LISTA DUPLA-------------------------------------
+void inserir_no_inicio(ListaDupla *lista, Objeto x){
 
-void inserirListaDupla(ListaDupla *lista, NoLista valor)
-{
-    NoLista *aux = (NoLista *)malloc(sizeof(NoLista));
+    nolista *novo = malloc(sizeof(nolista)); 
 
-    aux->valor = aux->valor;
-
-    if (lista->qtdeElementos == 0)
+    if (novo)
     {
-        // inicio da lista aponta para lista aux
-        lista->inicio = aux;
-
-        // fim da lista aponta para lista aux
-        lista->fim = aux;
-
-        // aumenta a qtde de elementos
+        novo->obj = x;
+        novo->proximo = lista->inicio;
+        lista->inicio = novo;
+       
+        if (lista->fim == NULL)
+            lista->fim = novo;
+        lista->fim->proximo = lista->inicio;
         lista->qtdeElementos++;
-    } // if 1
-    else if (lista->qtdeElementos == 1)
-    {
-        // proximo do inicio se iguala a lista aux
-        lista->inicio->proximo = aux;
-
-        // anterior do inicio se iguala a lista aux
-        lista->inicio->anterior = aux;
-
-        // fim da lista = aux
-        lista->fim = aux;
-
-        // anterior do aux aponta pro inicio da lista
-        aux->anterior = lista->inicio;
-
-        // proximo do aux aponta pro inicio da lista
-        aux->proximo = lista->inicio;
-
-        // aumenta a qtde de elementos
-        lista->qtdeElementos++;
-    } // if 2
+    }
     else
     {
-        // anterior do inicio = aux
-        lista->inicio->anterior = aux;
+        printf("WARNING! Erro ao alocar memoria! \n");
+    }//else
+    
+}//fucao
 
-        // proximo do aux = inicio da lista
-        aux->proximo = lista->inicio;
+//---------------INSERE LISTA DUPLA-------------------------------------
 
-        // anterior do aux = fim da lista
-        aux->anterior = lista->fim;
+bool inserirListaDupla(ListaDupla *lista, Objeto x)
+{
+    nolista *aux;
+    nolista *novo = malloc(sizeof(nolista));
 
-        // proximo do fim = aux
-        lista->fim->proximo = aux;
+    if (novo)
+    {
+        novo->obj = x;
+        
+        if (lista->inicio == NULL)
+        {
+            inserir_no_inicio(lista, x);
+        }
+        else if(x.valor < lista->inicio->obj.valor){
+            inserir_no_inicio(lista, x);
+        }
+        else {
+            aux = lista->inicio;
+            
+            while (aux->proximo != lista->inicio && x.valor > aux->proximo->obj.valor)
+            {
+                aux = aux->proximo;
 
-        // im da lista = aux
-        lista->fim = aux;
+                if (aux->proximo != lista->inicio)
+                {
+                    novo->proximo = aux->proximo;
+                    aux->proximo = novo;
+                    lista->qtdeElementos++;
+                }//if
+                
+            }//while
+            
+        }//else
+     
+    }//if 1
+    else{
+        printf("Erro ao alocar memoria! \n");
+    }//else
 
-        // aumenta a qtd de elementos
-        lista->qtdeElementos++;
-    } // else 2
-}
+}//funcao
 
 //----------------------------------------------------------------------
 
@@ -151,11 +161,11 @@ void imprimeListDupla(ListaDupla *lista)
 {
     nolista *percorre = lista->inicio;
 
-    printf("%s %d\n", percorre->dados, percorre->valor);
+    printf("%s %d\n", percorre->obj.dados, percorre->obj);
     percorre = percorre->proximo;
     while (percorre != lista->inicio)
     {
-        printf("%s %d\n", percorre->dados, percorre->valor);
+        printf("%s %d\n", percorre->obj.dados, percorre->obj);
         percorre = percorre->proximo;
     } // while
 }
@@ -185,10 +195,10 @@ void imprimeReverso(ListaDupla *lista)
 
         while (aux->anterior != NULL)
         {
-            printf("%d ", aux->valor);
+            printf("%d ", aux->obj);
             aux = aux->anterior;
         }
-        printf("%d ", aux->valor);
+        printf("%d ", aux->obj);
         printf("}\n");
 
     } // else
@@ -214,7 +224,7 @@ void imprimeNoArq(ListaDupla *lista, FILE *arqsaida)
 
         for (aux = lista->inicio; aux != NULL; aux = aux->proximo)
         {
-            fprintf(arqsaida, "{%d %s\n}", aux->valor, aux->dados);
+            fprintf(arqsaida, "{%d %s\n}", aux->obj, aux->obj.dados);
         } // for
 
     } // else
@@ -244,7 +254,7 @@ void imprimeREVListDupla(ListaDupla *lista, FILE *arqsaida)
 
         while (aux != NULL)
         {
-            fprintf(arqsaida, ("{%d, %s\n", aux->valor, aux->dados));
+            fprintf(arqsaida, ("{%d, %s\n", aux->obj, aux->obj.dados));
             aux = aux->anterior;
         } // while 2
 
@@ -261,7 +271,7 @@ void removeListaDupla(ListaDupla *lista)
 
     while (percorre->proximo != lista->inicio)
     {
-        if (percorre->dados == 0)
+        if (percorre->obj.dados == 0)
         {
             if (percorre == lista->inicio)
             {
@@ -288,7 +298,7 @@ void removeListaDupla(ListaDupla *lista)
 
     } // while
 
-    if (percorre->dados == 0 && percorre == lista->fim)
+    if (percorre->obj.dados == 0 && percorre == lista->fim)
     {
         lista->inicio->anterior = lista->fim->anterior;
         lista->fim = lista->inicio->anterior;
@@ -334,18 +344,18 @@ void pesquisaListaDupla(ListaDupla *lista, int x, FILE *arqsaida)
     PtrNoLista aux;
     aux = lista->inicio;
 
-    while (aux != NULL && aux->valor)
+    while (aux != NULL && aux->obj.valor)
     {
         aux = aux->proximo;
     }
 
-    if (aux == NULL || aux->valor > x)
+    if (aux == NULL || aux->obj.valor > x)
     {
         printf("O elemento nao foi encontrado na lista!\n");
     }
     else
     {
-        fprintf(arqsaida, "{%d, %s", aux->valor, aux->dados);
+        fprintf(arqsaida, "{%d, %s", aux->obj, aux->obj.dados);
     } // else
 
 } // funcao
@@ -425,7 +435,7 @@ int main(int argc, char *argv[])
     //--------INICIA LISTA---------------------------------------------------
 
     ListaDupla lista;
-    NoLista cadastro;
+    Objeto cadastro;
 
     iniciaListaDupla(&lista);
 
