@@ -1,4 +1,3 @@
-//HASH -> vetor de itens de hash
 #include <stdio.h>
 #include <stdlib.h>
 #define TAMANHO 10
@@ -20,9 +19,12 @@ typedef struct {
   int contador;
 } TabelaHashEndDireto;
 
-//---------------
 
+
+//----------------------------------------------------------------
 // inicializada
+//----------------------------------------------------------------
+
 void iniciaTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
   // percorrer o vetor, atribuir NULL
   // contador = 0
@@ -32,9 +34,12 @@ void iniciaTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
   tabela->contador = 0;
 }
 
-//---------------
+
+
+//----------------------------------------------------------------
 // Impressao
-//---------------
+//----------------------------------------------------------------
+
 void imprimirItemHash(ItemHash *item) {
   if(item == NULL) {
     printf(" ~~ NULL |\n");
@@ -54,15 +59,21 @@ void imprimirTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
   printf("-----------\n");
 }
 
-//---------------
-//---------------
 
+//----------------------------------------------------------------
 // destruir
+//----------------------------------------------------------------
+
 void destruirTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
   iniciaTabelaHashEndDireto(tabela);
 }
 
+
+
+//----------------------------------------------------------------
 // inserir
+//----------------------------------------------------------------
+
 void inserirTabelaHashEndDireto(TabelaHashEndDireto *tabela, ItemHash *item){
   if(item == NULL || item->chave >= TAMANHO || item->chave < 0) {
     printf("Warning: item vazio ou chave inválida!\n");
@@ -78,7 +89,12 @@ void inserirTabelaHashEndDireto(TabelaHashEndDireto *tabela, ItemHash *item){
   }
 }
 
+
+
+//----------------------------------------------------------------
 // consultar
+//----------------------------------------------------------------
+
 ItemHash* consultarTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
   // >= tamanho e < 0
   if(chave >= TAMANHO || chave < 0 || tabela->vetor[chave] == NULL) {
@@ -87,7 +103,12 @@ ItemHash* consultarTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
   return(tabela->vetor[chave]);
 }
 
+
+
+//----------------------------------------------------------------
 // remocao
+//----------------------------------------------------------------
+
 void removerTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
   // >= tamanho e < 0
   if(chave >= TAMANHO || chave < 0) {
@@ -105,21 +126,21 @@ void removerTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
 // vazia ou nao
 // cheia ou nao
 
-//---------------
-//---------------
+
+
+//----------------------------------------------------------------
+// main
+//----------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
-  
   TabelaHashEndDireto table;
   iniciaTabelaHashEndDireto(&table);
 
   printf("======\n");
   ItemHash h1 = {0,"gabriel", "trancar chave dentro do carro"};
   inserirTabelaHashEndDireto(&table, &h1);
-    
   ItemHash h2 = {8,"matheus", "estudar e não aprender nada"};
   inserirTabelaHashEndDireto(&table, &h2);
-    
   ItemHash h3 = {5,"mantova", "sono infinito"};
   inserirTabelaHashEndDireto(&table, &h3);
   imprimirTabelaHashEndDireto(&table);
