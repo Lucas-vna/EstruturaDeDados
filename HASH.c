@@ -1,184 +1,137 @@
 //HASH -> vetor de itens de hash
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#define TAMANHO 10
 
-#define TAMANHO 10;
-
-//--------------------Especificacoes----------------------------------
-
+//---------------
+// TAD
+// 1. Item de Hash (Heroi)
+// chave, nome, poder
 typedef struct {
+  int chave;
+  char nome[20];
+  char poder[50];
+} ItemHash;
 
-    int chave;
-    char nome [20];
-    char poder [20];
+// 2. Tabela Hash com Endereçamento Direto
+// vetor M, onde cada posicao é um heroi
+typedef struct {
+  ItemHash* vetor[TAMANHO];
+  int contador;
+} TabelaHashEndDireto;
 
-}itemHash;
+//---------------
 
-typedef struct{
-    
-    itemHash* vetor[TAMANHO];
-    int contador;
-
-}TabelaHashEndDireto;
-
-
-//--------------------------------------------------------------------
-
-
-
-//--------------------Inicializacao-----------------------------------
-
-void iniciaHash(TabelaHashEndDireto *tabela){
-
-    //percorre o vetor e distribui NULL
-    for (int i = 0; i < TAMANHO; i++)
-    {
-        tabela->vetor[i] = NULL;
-    }
-    else
-    {
-        tabela->contador = 0;
-    }
-    
-
+// inicializada
+void iniciaTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
+  // percorrer o vetor, atribuir NULL
+  // contador = 0
+  for(int i = 0; i < TAMANHO; i++) {
+    tabela->vetor[i] = NULL;
+  }
+  tabela->contador = 0;
 }
 
-//--------------------------------------------------------------------
-
-
-
-//--------------------Impressao---------------------------------------
-
-void ImprimeItemHash(itemHash *item){
-
-    if (item == NULL)
-    {
-        printf("^^ NULL | \n");
-    }
-    else
-    {
-        printf(" %s | %d");
-    }
-    
-
+//---------------
+// Impressao
+//---------------
+void imprimirItemHash(ItemHash *item) {
+  if(item == NULL) {
+    printf(" ~~ NULL |\n");
+  } else {
+    printf(" %s | %s |\n", item->nome, item->poder);
+  }
 }
 
-void ImprimeTabelaHashEndDireto(TabelaHashEndDireto *tabela){
-
-    printf("===================\n");
-    printf("        HASH       \n");
-    printf("===================\n");
-
-    for (int i = 0; i < TAMANHO; i++)
-    {
-        printf(" %d |", i);
-        ImprimeTabelaHashEndDireto(tabela->vetor[i]);
-    }
-    
-
+void imprimirTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
+  printf("-----------\n");
+  printf("    Hash   \n");
+  printf("-----------\n");
+  for(int i=0; i < TAMANHO; i++) {
+    printf(" %d |", i);
+    imprimirItemHash(tabela->vetor[i]);
+  }
+  printf("-----------\n");
 }
 
-//--------------------------------------------------------------------
+//---------------
+//---------------
 
+// destruir
+void destruirTabelaHashEndDireto(TabelaHashEndDireto *tabela) {
+  iniciaTabelaHashEndDireto(tabela);
+}
 
+// inserir
+void inserirTabelaHashEndDireto(TabelaHashEndDireto *tabela, ItemHash *item){
+  if(item == NULL || item->chave >= TAMANHO || item->chave < 0) {
+    printf("Warning: item vazio ou chave inválida!\n");
+    return;
+  }
 
-//--------------------Remocao-----------------------------------------
+  if(tabela->vetor[item->chave] == NULL) {
+    //  vetor[x.chave] = x
+    tabela->vetor [item->chave] = item;
+    tabela->contador++;
+  } else {
+    printf("Warning: posição já ocupada!\n");
+  }
+}
 
-void RemoverTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave){
+// consultar
+ItemHash* consultarTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
+  // >= tamanho e < 0
+  if(chave >= TAMANHO || chave < 0 || tabela->vetor[chave] == NULL) {
+    return NULL;
+  }
+  return(tabela->vetor[chave]);
+}
 
-    if (chave >= TAMANHO || chave < 0)
-    {
-        printf("WARNING!");
-        return;
-    }//if 1
-    
-    if (tabela->vetor[chave] != NULL)
-    {
-        tabela->vetor[chave] = NULL;
-        tabela->contador--;
-    }//if 2
-    
-
+// remocao
+void removerTabelaHashEndDireto(TabelaHashEndDireto *tabela, int chave) {
+  // >= tamanho e < 0
+  if(chave >= TAMANHO || chave < 0) {
+    printf("Warning: chave inválida!\n");
+    return;
+  }
+  if(tabela->vetor[chave] != NULL) {
     tabela->vetor[chave] = NULL;
-
+    tabela->contador--;
+  }
 }
 
-//--------------------------------------------------------------------
+// TODO: HOMEWORK
+// tamanho (elementos)
+// vazia ou nao
+// cheia ou nao
 
+//---------------
+//---------------
 
+int main(int argc, char *argv[]) {
+  
+  TabelaHashEndDireto table;
+  iniciaTabelaHashEndDireto(&table);
 
-//--------------------Inserir-----------------------------------------
-
-void InsereTabelaHashEndDireto(TabelaHashEndDireto *tabela, itemHash *item){
-
-    if (tabelas->vetor[item->chave] == NULL)
-    {
-        tabela->vetor[item->chave] = item;
-        tabela->contador++;
-    }
-    else
-    {
-        printf("WARNING!");
-    }
-
-}
-
-//--------------------------------------------------------------------
-
-
-
-//--------------------Consulta----------------------------------------
-
-itemHash* ConsultarTabelaHashEndDireto(TabelaHashEndDireto *tabela, ){
-
-
-
-}
-
-//--------------------------------------------------------------------
-
-
-
-//--------------------Destroi-----------------------------------------
-
-void DestroiTabelaHashEndDireto (){
-
-    iniciaHash(DestroiTabelaHashEndDireto);
-
- /*   itemHash *desaloca;
-
-    for (int i = 0; i < TAMANHO; i++)
-    {
-        if (tabela->vetor[i] != NULL)
-        {
-            desaloca = tabelas->vetor
-        }
-        
-    }*/
+  printf("======\n");
+  ItemHash h1 = {0,"gabriel", "trancar chave dentro do carro"};
+  inserirTabelaHashEndDireto(&table, &h1);
     
-
-}
-
-//--------------------------------------------------------------------
-
-
-
-//--------------------------------------------------------------------
-
-int main(int argc, char const *argv[]){
+  ItemHash h2 = {8,"matheus", "estudar e não aprender nada"};
+  inserirTabelaHashEndDireto(&table, &h2);
     
-    TabelaHashEndDireto table;
+  ItemHash h3 = {5,"mantova", "sono infinito"};
+  inserirTabelaHashEndDireto(&table, &h3);
+  imprimirTabelaHashEndDireto(&table);
 
-        iniciaHash(&table);
-        ImprimeTabelaHashEndDireto(&table);
+  removerTabelaHashEndDireto(&table, 50);
+  removerTabelaHashEndDireto(&table, -50);
+  ItemHash *retorno = consultarTabelaHashEndDireto(&table, 5);
+  removerTabelaHashEndDireto(&table, 5);
+  imprimirTabelaHashEndDireto(&table);
+  imprimirItemHash(retorno);
+  destruirTabelaHashEndDireto(&table);
+  imprimirTabelaHashEndDireto(&table);
 
-        itemHash h1 = {0, "Lucas, aprender a matéria durante a prova"}
-        InsereTabelaHashEndDireto(&table, &h1);
-        ImprimeItemHash(&table);
-
-        itemHash(retorno);
-
-    return 0;
+  return 0;
 }
- 
